@@ -5,6 +5,8 @@ namespace Programe
     public class Study
     {
         #region 백준 알고리즘 기초 1
+
+        #region 자료구조 1
         public void Baekjoon_9093()
         {
             //단어 뒤집기
@@ -243,7 +245,331 @@ namespace Programe
             }
         }
 
-        
+        public void Baekjoon_10845()
+        {
+            //큐
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                StringBuilder sb = new StringBuilder();
+                Queue<int> queue = new Queue<int>();
+
+                for (int i = 0; i < n; i++)
+                {
+                    string? cmd = Console.ReadLine();
+                    if (String.IsNullOrEmpty(cmd)) return;
+                    
+                    switch (cmd.Split(' ')[0])
+                    {
+                        case "push":
+                            queue.Enqueue(Convert.ToInt32(cmd.Split(' ')[1]));
+                            break;
+                        case "pop":
+                            if (queue.TryDequeue(out int pop)) sb.Append(pop + "\n");
+                            else sb.Append(-1 + "\n");
+                            break;
+                        case "size":
+                            sb.Append(queue.Count + "\n");
+                            break;
+                        case "empty":
+                            if (queue.Count == 0) sb.Append(1 + "\n");
+                            else sb.Append(0 + "\n");
+                            break;
+                        case "front":
+                            if (queue.TryPeek(out int front)) sb.Append(front + "\n");
+                            else sb.Append(-1 + "\n");
+                            break;
+                        case "back":
+                            int back = 0;
+                            try {
+                                back = queue.Last();
+                            }
+                            catch {
+                                back = -1;
+                            }
+                            sb.Append(back + "\n");
+                            break;
+                    }
+                }
+                Console.Write(sb);
+            }
+        }
+
+        public void Baekjoon_1158()
+        {
+            //요세푸스 문제
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                int n = Convert.ToInt32(str.Split(' ')[0]);
+                int k = Convert.ToInt32(str.Split(' ')[1]);
+                Queue<int> queue = new Queue<int>();
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < n; i++)
+                {
+                    queue.Enqueue(i + 1);
+                }
+
+                while (queue.Count > 0)
+                {
+                    for (int i = 1; i < k; i++)
+                    {
+                        queue.TryDequeue(out int result);
+                        queue.Enqueue(result);
+                    }
+                    queue.TryDequeue(out int value);
+                    sb.Append(value + ", ");
+                }
+                Console.WriteLine("<" + sb.ToString().Substring(0, sb.Length - 2) + ">");
+            }
+        }
+
+        public void Baekjoon_10886()
+        {
+            //덱
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                StringBuilder sb = new StringBuilder();
+                int[] Deque = new int[10001];
+                int size = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    string? cmd = Console.ReadLine();
+                    if (String.IsNullOrEmpty(cmd)) return;
+
+                    switch (cmd.Split(' ')[0])
+                    {
+                        case "push_front":
+                            Deque[size] = Convert.ToInt32(cmd.Split(' ')[1]);
+                            size += 1;
+                            break;
+                        case "push_back":
+                            for (int j = size; j > 0 ; j--)
+                            {
+                                Deque[j] = Deque[j - 1];
+                            }
+                            Deque[0] = Convert.ToInt32(cmd.Split(' ')[1]);
+                            size += 1;
+                            break;
+                        case "pop_front":
+                            if (size > 0)
+                            {
+                                sb.AppendLine(Deque[size - 1].ToString());
+                                size -= 1;
+                            }
+                            else sb.AppendLine("-1");
+                            break;
+                        case "pop_back":
+                            if (size > 0)
+                            {
+                                sb.AppendLine(Deque[0].ToString());
+
+                                for (int j = 0; j < size; j++)
+                                {
+                                    Deque[j] = Deque[j + 1];
+                                }
+                                size -= 1;
+                            }
+                            else sb.AppendLine("-1");
+                            break;
+                        case "size":
+                            sb.AppendLine(size.ToString());
+                            break;
+                        case "empty":
+                            if (size == 0) sb.AppendLine("1");
+                            else sb.AppendLine("0");
+                            break;
+                        case "front":
+                            if (size > 0)
+                            {
+                                sb.AppendLine(Deque[size - 1].ToString());
+                            }
+                            else sb.AppendLine("-1");
+                            break;
+                        case "back":
+                            if (size > 0)
+                            {
+                                sb.AppendLine(Deque[0].ToString());
+                            }
+                            else sb.AppendLine("-1");
+                            break;
+                    }
+                }
+                Console.Write(sb);
+            }
+        }
+        #endregion
+
+        #region 자료구조 1 (연습)
+        public void Baekjoon_17413()
+        {
+            //단어 뒤집기2
+            while (true)
+            {
+                string? s = Console.ReadLine();
+                if (String.IsNullOrEmpty(s)) return;
+
+                StringBuilder sb = new StringBuilder();
+                Stack<char> stack = new Stack<char>();
+                bool tag = false;
+                int size = 0;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] == '<') {
+                        size = stack.Count;
+                        for (int j = 0; j < size; j++)
+                        {
+                            stack.TryPop(out char result);
+                            sb.Append(result);
+                        }
+                        sb.Append(s[i]);
+                        tag = true;
+                    }
+                    else if (s[i] == '>') {
+                        sb.Append(s[i]);
+                        tag = false;
+                    }
+                    else if (tag) {
+                        sb.Append(s[i]);
+                    }
+                    else {
+                        if (s[i] == ' ') {
+                            size = stack.Count;
+                            for (int j = 0; j < size ; j++)
+                            {
+                                stack.TryPop(out char result);
+                                sb.Append(result);
+                            }
+                            sb.Append(s[i]);
+                        }
+                        else
+                        {
+                            stack.Push(s[i]);
+                        }
+                    }
+                }
+                size = stack.Count;
+                for (int j = 0; j < size; j++)
+                {
+                    stack.TryPop(out char result);
+                    sb.Append(result);
+                }
+
+                Console.WriteLine(sb);
+            }
+        }
+
+        public void Baekjoon_10799()
+        {
+            //쇠막대기
+            while(true)
+            {
+                int retval = 0;
+                Stack<int> stack = new Stack<int>();
+
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                char[] stick = str.ToCharArray();
+                for (int i = 0; i < stick.Length; i++)
+                {
+                    if (stick[i] == ')')
+                    {
+                        if (stack.Peek() == i-1) {
+                            stack.Pop();
+                            retval += stack.Count;
+                        }
+                        else {
+                            stack.Pop();
+                            retval += 1;
+                        }
+                    }
+                    else
+                    {
+                        stack.Push(i);
+                    }
+                }
+                Console.WriteLine(retval);
+            }
+        }
+
+        public void Baekjoon_17298()
+        {
+            //오큰수
+            while(true)
+            {
+                #region 시간초과
+                /*
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+
+                if (String.IsNullOrEmpty(str)) return;
+                StringBuilder sb = new StringBuilder();
+                string[] a = str.Split(' ');
+                Stack<int> stack = new Stack<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    if (i > 0) sb.Append(' ');
+                    if (stack.Count == 0) stack.Push(Convert.ToInt32(a[i]));
+
+                    for (int j = i + 1; j < a.Length; j++) {
+                        if (stack.Peek() < Convert.ToInt32(a[j])) {
+                            stack.Push(Convert.ToInt32(a[j]));
+                            break;
+                        }
+                    }
+                    if (stack.Peek() == Convert.ToInt32(a[i])) { 
+                        sb.Append("-1");
+                        stack.Pop();
+                    }
+                    else  {
+                        sb.Append(stack.Peek());
+                    }
+                }
+                Console.WriteLine(sb);
+                */
+                #endregion
+
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+
+                if (String.IsNullOrEmpty(str)) return;
+                StringBuilder sb = new StringBuilder();
+                string[] a = str.Split(' ');
+                int[] ans = new int[n];
+                Stack<int> stack = new Stack<int>();
+                stack.Push(0);
+                for (int i = 1; i < n; i++)
+                {
+                    if (stack.Count == 0) stack.Push(i);
+
+                    while (stack.Count > 0 && Convert.ToInt32(a[stack.Peek()]) < Convert.ToInt32(a[i]))
+                    {
+                        ans[stack.Peek()] = Convert.ToInt32(a[i]);
+                        stack.Pop();
+                    }
+                    stack.Push(i);
+                }
+
+                while (stack.Count > 0)
+                {
+                    ans[stack.Peek()] = -1;
+                    stack.Pop();
+                }
+                
+                for (int i = 0; i < n; i++) {
+                    sb.Append(ans[i] + " ");
+                }
+
+                Console.WriteLine(sb);
+            }
+        }
+
+        #endregion
 
         #endregion
 
