@@ -6,6 +6,7 @@ namespace Programe
     {
         #region 백준 알고리즘 기초 1
 
+        #region Chapter2
         #region 자료구조 1
         public void Baekjoon_9093()
         {
@@ -403,7 +404,6 @@ namespace Programe
             }
         }
         #endregion
-
         #region 자료구조 1 (연습)
         public void Baekjoon_17413()
         {
@@ -497,7 +497,7 @@ namespace Programe
             }
         }
 
-        public void Baekjoon_17298()
+        public void Baekjoon_17298()    //*
         {
             //오큰수
             while(true)
@@ -569,11 +569,56 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_17299()    //**
+        {
+            //오등큰수
+            while(true)
+            {
+                int[] freq = new int[1000001];
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+
+                if (String.IsNullOrEmpty(str)) return;
+                StringBuilder sb = new StringBuilder();
+                string[] a = str.Split(' ');
+                int[] ans = new int[n];
+                Stack<int> stack = new Stack<int>();
+                stack.Push(0);
+                for (int i = 0; i < n; i++)
+                {
+                    freq[Convert.ToInt32(a[i])] += 1;
+                }
+
+                for (int i = 1; i < n; i++)
+                {
+                    if (stack.Count == 0) stack.Push(i);
+
+                    while (stack.Count > 0 && freq[Convert.ToInt32(a[stack.Peek()])] < freq[Convert.ToInt32(a[i])])
+                    {
+                        ans[stack.Peek()] = Convert.ToInt32(a[i]);
+                        stack.Pop();
+                    }
+                    stack.Push(i);
+                }
+
+                while (stack.Count > 0)
+                {
+                    ans[stack.Peek()] = -1;
+                    stack.Pop();
+                }
+                
+                for (int i = 0; i < n; i++) {
+                    sb.Append(ans[i] + " ");
+                }
+
+                Console.WriteLine(sb);
+            }
+        }
+        #endregion
         #endregion
 
-        #endregion
-
-        #region Study
+        #region Chapter3
+        #region 수학 1
         #region 백준 2609번 : 최대공약수와 최소공배수
         public void Baekjoon_2609()
         {
@@ -605,6 +650,122 @@ namespace Programe
             return getGcd(b, a % b);
         }
         #endregion
+        #region 최소공배수
+        public void Baekjoon_1934()
+        {
+            int t = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < t; i++) {
+                string? str = Console.ReadLine();
+                
+                if (String.IsNullOrEmpty(str)) return;
+
+                int a = Convert.ToInt32(str.Split(' ')[0]);
+                int b = Convert.ToInt32(str.Split(' ')[1]);
+
+                int g = 1;
+                for (int j = 2; j <= Math.Min(a,b); j++)
+                {
+                    if (a % j == 0 && b % j == 0) {
+                        g = j;
+                    }
+                }
+
+                Console.WriteLine(a * b / g);
+            }
+        }
+        #endregion 
+        #region 팩토리얼
+        public void Baekjoon_10872()
+        {
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int retval = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    retval=retval * i;
+                }
+                Console.WriteLine(retval);
+            }
+        }
+        #endregion
+        #region 팩토리얼 0의 갯수
+        public void Baekjoon_1676()
+        {
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int count = 0;
+                for (int i = 1; i <= n; i++)
+                {
+                    int j = i;
+                    
+                    while (j % 5 == 0)
+                    {
+                        j = Convert.ToInt32(j / 5);
+                        count++;
+                    }
+                }
+
+                Console.WriteLine(count);
+            }
+        }
+        #endregion
+        #region 조합 0의 갯수
+        //수학 공식을 모르겠음...
+        public void Baekjoon_2004()
+        {
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+                long n = Convert.ToInt64(str.Split(' ')[0]);
+                long m = Convert.ToInt64(str.Split(' ')[1]);
+
+                long xCount = 0;
+                long jCount = 0;
+
+                for (long i=2; i<=n; i*=2) {
+                    xCount += n/i;
+                }
+
+                for (long i=2; i<=n-m; i*=2) {
+                    xCount -= (n-m)/i;
+                }
+
+                for (long i=2; i<=m; i*=2) {
+                    xCount -= m/i;
+                }
+
+                for (long i=5; i<=n; i*=5) {
+                    jCount += n/i;
+                }
+
+                for (long i=5; i<=n-m; i*=5) {
+                    jCount -= (n-m)/i;
+                }
+
+                for (long i=5; i<=m; i*=5) {
+                    jCount -= m/i;
+                }
+
+                Console.WriteLine(Math.Min(xCount, jCount));
+            }
+        }
+        #endregion
+        #endregion
+        #region 수학 1 (연습)
+        public void Baekjoon_9613()
+        {
+            
+        }
+        #endregion
+        #endregion
+
+        #endregion
+
+        #region Study
 
         #region 백준 17425번 : 약수의 합
         public void Baekjoon_17425()
@@ -856,6 +1017,7 @@ namespace Programe
             return answer;
         }
         #endregion
+        
         #endregion
     }
 }
