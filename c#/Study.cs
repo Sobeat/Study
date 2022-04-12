@@ -758,9 +758,227 @@ namespace Programe
         #region 수학 1 (연습)
         public void Baekjoon_9613()
         {
-            
+            //GCD의 합
+            int t = Convert.ToInt32(Console.ReadLine());
+            //int t = 3;
+            while (t-- > 0)
+            {
+                string? str = Console.ReadLine();
+                //string str = "4 10 20 30 40";
+                if (String.IsNullOrEmpty(str)) return;
+
+                int[] a = new int[str.Split(' ').Length];
+                for (int i = 0; i < str.Split(' ').Length; i++)
+                {
+                    a[i] = Convert.ToInt32(str.Split(' ')[i]);
+                }
+
+                long ans = 0;
+                for (int i = 1; i < a.Length - 1; i++)
+                {
+                    for (int j = i+1; j < a.Length; j++)
+                    {
+                        ans += getGcd(a[i], a[j]);
+                    }
+                }
+
+                Console.WriteLine(ans);
+            }
+                
+        }
+
+        public void Baekjoon_17087()
+        {
+            //숨바꼭질6
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                int n = Convert.ToInt32(str.Split(' ')[0]);
+                int s = Convert.ToInt32(str.Split(' ')[1]);
+
+                str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+                string[] a = str.Split(' ');
+                int[] ans = new int[a.Length];
+
+                for (int i = 0; i < a.Length; i++)
+                {
+                    //ans[i] = Convert.ToInt32(a[i]);
+                    ans[i] = Math.Abs(Convert.ToInt32(a[i]) - s);
+                }
+
+                int maxD = ans[0];
+                for (int i = 1; i < n; i++)
+                {
+                    maxD = getGcd(maxD, ans[i]);
+                }
+
+                Console.WriteLine(maxD);
+            }
+        }
+
+        public void Baekjoon_1373()
+        {
+            //2진수 8진수
+            while (true)
+            {
+                string? s = Console.ReadLine();
+                if (String.IsNullOrEmpty(s)) return;
+
+                StringBuilder sb = new StringBuilder();
+
+                int n = s.Length;
+                if (n%3 == 1) {
+                    sb.Append(s[0]);
+                } else if (n%3 == 2) {
+                    sb.Append((s[0]-'0')*2 + s[1]-'0');
+                }
+                for (int i = n%3; i<n; i+=3) {
+                    sb.Append((s[i]-'0')*4 + (s[i+1]-'0')*2 + (s[i+2]-'0'));
+                }
+
+                Console.WriteLine(sb);
+            }
+        }
+
+        public void Baekjoon_1212()
+        {
+            //8진수 2진수
+            while (true)
+            {
+                string[] eight = {"000","001","010","011","100","101","110","111"};
+                string? s = Console.ReadLine();
+                if (String.IsNullOrEmpty(s)) return;
+                StringBuilder sb = new StringBuilder();
+                bool start = true;
+                if (s.Length == 1 && s[0] == '0') {
+                    sb.Append(0);
+                }
+                for (int i=0; i<s.Length; i++) {
+                    int n = s[i] - '0';
+                    if (start == true && n < 4) {
+                        if (n == 0) {
+                            continue;
+                        } else if (n == 1) {
+                            sb.Append("1");
+                        } else if (n == 2) {
+                            sb.Append("10");
+                        } else if (n == 3) {
+                            sb.Append("11");
+                        }
+                        start = false;
+                    }
+                    else {
+                        sb.Append(eight[n]);
+                        start = false;
+                    }
+                }
+
+                Console.WriteLine(sb);
+            }
+        }
+
+        public void Baekjoon_2089()
+        {
+            while(true)
+            {
+                //-2진수
+                int n = Convert.ToInt32(Console.ReadLine());
+                StringBuilder sb = new StringBuilder();
+                if (n == 0) sb.Append(0);
+                else {
+                    go(n, sb);
+                }
+                Console.WriteLine(sb);
+            }
+        }
+
+        public void go(int n, StringBuilder sb)
+        {
+            if (n == 0) {
+                return;
+            }
+            if (n%2 == 0) {
+                go(-(n/2), sb);
+                sb.Append(0);
+            } else {
+                if (n > 0) {
+                    go(-(n/2), sb);
+                } else {
+                    go((-n+1)/2, sb);
+                }
+                sb.Append(1);
+            }
+        }
+        
+        public void Beakjoon_17103()
+        {
+            //골드바흐 파티션
+            int t = Convert.ToInt32(Console.ReadLine());
+            List<int> primes = new List<int>();
+            bool[] check = new bool[1000001];
+
+            for (int i=2; i <=1000000;i++)
+            {
+                if (check[i] == false) {
+                    primes.Add(i);
+                    for (int j = i+i; j<=1000000;j+=i) {
+                        check[j] = true;
+                    }
+                }
+            }
+
+            while (t-- > 0)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int ans = 0;
+                foreach (int p in primes)
+                {
+                    if (n-p >= 2 && p <= n-p) {
+                        if (check[n-p] == false) {
+                            ans += 1;
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }
+                Console.WriteLine(ans);
+            }
         }
         #endregion
+        #endregion
+
+        #region Chapter4
+        public int[] d = new int[1000001];
+        public void Baekjoon_1463()
+        {
+            //1로 만들기
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(Baekjoon_1463_go(n));
+            }
+        }
+
+        public int Baekjoon_1463_go(int n)
+        {
+            if (n == 1) return 0;
+            if (d[n] > 0) return d[n];
+            d[n] = Baekjoon_1463_go(n-1) + 1;
+            if (n%2 == 0) {
+                int temp = Baekjoon_1463_go(n/2) + 1;
+                if (d[n] > temp) d[n] = temp;
+            }
+
+            if (n%3 == 0) {
+                int temp = Baekjoon_1463_go(n/3) + 1;
+                if (d[n] > temp) d[n] = temp;
+            }
+            return d[n];
+        }
         #endregion
 
         #endregion
