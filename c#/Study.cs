@@ -979,6 +979,61 @@ namespace Programe
             }
             return d[n];
         }
+        
+        public void Baekjoon_11726()
+        {
+            //2*n 타일링
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] d = new int[1001];
+                d[0] = d[1] = 1;
+                for (int i=2; i<=n; i++) {
+                    d[i] = d[i-1] + d[i-2];
+                    d[i] %= 10007;
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_11727()
+        {
+            //2*n 타일링2
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] d = new int[1001];
+                d[0] = d[1] = 1;
+                for (int i=2; i<=n; i++)
+                {
+                    d[i] = 2*d[i-2] + d[i-1];
+                    d[i] %= 10007;
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_9095()
+        {
+            //1,2,3 더하기
+            int t = Convert.ToInt32(Console.ReadLine());
+            while (t-- > 0)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] d = new int[1000];
+                d[0] = d[1] = 1;
+                d[2] = 2;
+                for (int i=3; i<=n; i++)
+                {
+                    d[i] = d[i-1] + d[i-2] + d[i-3];
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+        
         #endregion
 
         #endregion
