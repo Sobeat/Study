@@ -1034,6 +1034,35 @@ namespace Programe
             }
         }
         
+        public void Baekjoon_11052()
+        {
+            //카드 구매하기
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                int[] d = new int[n+1];
+                int[] a = new int[n+1];
+                for (int i = 1; i <= n; i++)
+                {
+                    a[i] = Convert.ToInt32(str.Split(' ')[i - 1]);
+                }
+
+                for (int i = 1; i <= n; i++)
+                {
+                    for (int j = 1; j <= i; j++)
+                    {
+                        if (d[i] < d[i-j] + a[j]) {
+                            d[i] = d[i-j] + a[j];
+                        }
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
         #endregion
 
         #endregion
