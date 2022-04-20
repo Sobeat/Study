@@ -1063,7 +1063,92 @@ namespace Programe
                 Console.WriteLine(d[n]);
             }
         }
+
+        public void Baekjoon_16194()
+        {
+            //카드 구매하기2
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                int[] d = new int[n+1];
+                int[] a = new int[n+1];
+                for (int i = 1; i <= n; i++)
+                {
+                    a[i] = Convert.ToInt32(str.Split(' ')[i - 1]);
+                } 
+
+                for (int i = 1; i <= n; i++)
+                { 
+                    d[i] = -1;
+                }
+
+                d[0] = 0;
+
+                for (int i = 1; i <= n; i++)
+                {
+                    for (int j = 1; j <= i; j++)
+                    {
+                        if (d[i] == -1 || d[i] > d[i-j]+a[j])
+                        d[i] = d[i-j] + a[j];
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
         #endregion
+
+        public void Baekjoon_15990()
+        {
+            //1,2,3 더하기 5번째
+            while (true)
+            {
+                long[,] d = new long[100001, 4];
+                for (int i = 1; i <= 100000; i++)
+                {
+                    if (i - 1 >= 0)
+                    {
+                        d[i, 1] = d[i - 1, 2] + d[i - 1, 3];
+                        if (i == 1)
+                        {
+                            d[i, 1] = 1;
+                        }
+                    }
+
+                    if (i - 2 >= 0)
+                    {
+                        d[i, 2] = d[i - 2, 1] + d[i - 2, 3];
+                        if (i == 2)
+                        {
+                            d[i, 2] = 1;
+                        }
+                    }
+
+                    if (i - 3 >= 0)
+                    {
+                        d[i, 3] = d[i - 3, 1] + d[i - 3, 2];
+                        if (i == 3)
+                        {
+                            d[i, 3] = 1;
+                        }
+                    }
+
+                    d[i, 1] %= 1000000009L;
+                    d[i, 2] %= 1000000009L;
+                    d[i, 3] %= 1000000009L;
+                }
+
+                int t = Convert.ToInt32(Console.ReadLine());
+                while (t-- > 0)
+                {
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine((d[n,1] + d[n,2] + d[n,3])%1000000009);
+                }
+            }
+        }
 
         #endregion
 
