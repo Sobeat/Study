@@ -1034,8 +1034,239 @@ namespace Programe
             }
         }
         
-        #endregion
+        public void Baekjoon_11052()
+        {
+            //카드 구매하기
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
 
+                int[] d = new int[n+1];
+                int[] a = new int[n+1];
+                for (int i = 1; i <= n; i++)
+                {
+                    a[i] = Convert.ToInt32(str.Split(' ')[i - 1]);
+                }
+
+                for (int i = 1; i <= n; i++)
+                {
+                    for (int j = 1; j <= i; j++)
+                    {
+                        if (d[i] < d[i-j] + a[j]) {
+                            d[i] = d[i-j] + a[j];
+                        }
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_16194()
+        {
+            //카드 구매하기2
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+
+                int[] d = new int[n+1];
+                int[] a = new int[n+1];
+                for (int i = 1; i <= n; i++)
+                {
+                    a[i] = Convert.ToInt32(str.Split(' ')[i - 1]);
+                } 
+
+                for (int i = 1; i <= n; i++)
+                { 
+                    d[i] = -1;
+                }
+
+                d[0] = 0;
+
+                for (int i = 1; i <= n; i++)
+                {
+                    for (int j = 1; j <= i; j++)
+                    {
+                        if (d[i] == -1 || d[i] > d[i-j]+a[j])
+                        d[i] = d[i-j] + a[j];
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+        
+
+        public void Baekjoon_15990()
+        {
+            //1,2,3 더하기 5번째
+            while (true)
+            {
+                long[,] d = new long[100001, 4];
+                for (int i = 1; i <= 100000; i++)
+                {
+                    if (i - 1 >= 0)
+                    {
+                        d[i, 1] = d[i - 1, 2] + d[i - 1, 3];
+                        if (i == 1)
+                        {
+                            d[i, 1] = 1;
+                        }
+                    }
+
+                    if (i - 2 >= 0)
+                    {
+                        d[i, 2] = d[i - 2, 1] + d[i - 2, 3];
+                        if (i == 2)
+                        {
+                            d[i, 2] = 1;
+                        }
+                    }
+
+                    if (i - 3 >= 0)
+                    {
+                        d[i, 3] = d[i - 3, 1] + d[i - 3, 2];
+                        if (i == 3)
+                        {
+                            d[i, 3] = 1;
+                        }
+                    }
+
+                    d[i, 1] %= 1000000009L;
+                    d[i, 2] %= 1000000009L;
+                    d[i, 3] %= 1000000009L;
+                }
+
+                int t = Convert.ToInt32(Console.ReadLine());
+                while (t-- > 0)
+                {
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine((d[n,1] + d[n,2] + d[n,3])%1000000009);
+                }
+            }
+        }
+
+        public void Baekjoon_10844()
+        {
+            //쉬운 계단 수
+            while (true)
+            {
+                long mod = 1000000000;
+                int n = Convert.ToInt32(Console.ReadLine());
+
+                long[,] d = new long[n+1,10];
+                for (int i=1; i<=9; i++) d[1,i] = 1;
+                for (int i=2; i<=n; i++) {
+                    for (int j=0; j<=9; j++) {
+                        d[i,j] = 0;
+                        if (j-1 >= 0) d[i,j] += d[i-1,j-1];
+                        if (j+1 <= 9) d[i,j] += d[i-1,j+1];
+                        d[i,j] %= mod;
+                    }
+                }
+
+                long ans = 0;
+                for (int i=0; i<=9; i++) {
+                    ans += d[n,i];
+                }
+                ans %= mod;
+                Console.WriteLine(ans);
+            }
+        }
+
+        public void Baekjoon_2193()
+        {
+            //이친수
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                long[] d = new long[n+1];
+                d[1] = 1;
+                if (n >= 2) {
+                    d[2] = 1;
+                }
+                for (int i=3; i<=n; i++) {
+                    d[i] = d[i-1] + d[i-2];
+                }
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_11053()
+        {
+            //가장 긴 증가하는 부분 수열(LIS)
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+                int[] d = new int[n];
+                for (int i=0; i<n; i++) {
+                    d[i] = 1;
+                    for (int j=0; j<i; j++) {
+                        if (a[j] < a[i] && d[i] < d[j]+1) {
+                            d[i] = d[j]+1;
+                        }
+                    }
+                }
+                int ans = d[0];
+                for (int i=0; i<n; i++) {
+                    if (ans < d[i]) {
+                        ans = d[i];
+                    }
+                }
+
+                Console.WriteLine(ans);
+            }
+        }
+
+        public void Baekjoon_14002()
+        {
+            //가장 긴 증가하는 부분 수열 4
+            while (true)
+            {
+                StringBuilder sb = new StringBuilder();
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+                int[] d = new int[n];
+                int[] v = new int[n];
+
+                for (int i=0; i<n; i++) {
+                    d[i] = 1;
+                    v[i] = -1;
+                    for (int j=0; j<i; j++) {
+                        if (a[j] < a[i] && d[i] < d[j]+1) {
+                            d[i] = d[j]+1;
+                            v[i] = j;
+                        }
+                    }
+                }
+                int ans = d[0];
+                int p = 0;
+                for (int i=0; i<n; i++) {
+                    if (ans < d[i]) {
+                        ans = d[i];
+                        p = i;
+                    }
+                }
+
+                sb.AppendLine(ans.ToString());
+                Baekjoon_14002_go(p, a, d, v, sb);
+                Console.WriteLine(sb);
+            }
+        }
+
+        public void Baekjoon_14002_go(int p, int[] a, int[] d, int[] v, StringBuilder sb)
+        {
+            if (p == -1) return;
+            Baekjoon_14002_go(v[p], a, d, v, sb);
+            sb.Append(a[p] + " ");
+        }
+
+        #endregion
         #endregion
 
         #region Study
