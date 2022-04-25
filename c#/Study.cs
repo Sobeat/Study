@@ -1266,6 +1266,50 @@ namespace Programe
             sb.Append(a[p] + " ");
         }
 
+        public void Baekjoon_1912()
+        {
+            //연속합
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), Int32.Parse);
+                int[] d = new int[n];
+
+                for (int i = 0; i < n; i++)
+                {
+                    d[i] = a[i];
+                    if (i == 0) continue;
+                    if (d[i] < d[i - 1] + a[i]) d[i] = d[i - 1] + a[i];
+                }
+                int ans = d[0];
+                for (int i=0; i<n; i++) {
+                    if (ans < d[i]) ans = d[i];
+                }
+                Console.WriteLine(ans);
+            }
+        }
+
+        public void Baekjoon_1699()
+        {
+            //제곱수의 합
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] d = new int[n+1];
+
+                for (int i=1; i<=n; i++) {
+                    d[i] = i;
+                    for (int j=1; j*j<=i; j++) {
+                        if (d[i] > d[i-j*j]+1) {
+                            d[i] = d[i-j*j]+1;
+                        }
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+
         #endregion
         #endregion
 
