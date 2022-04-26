@@ -1289,6 +1289,31 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_2225()
+        {
+            //합분해
+            long mod = 1_000_000_000;
+            while(true) {
+                string? str = Console.ReadLine();
+                if (String.IsNullOrEmpty(str)) return;
+                
+                int n = Convert.ToInt32(str.Split(' ')[0]);
+                int k = Convert.ToInt32(str.Split(' ')[1]);
+                long[,] d = new long[k+1,n+1];
+                d[0,0] = 1;
+                for (int i=1; i<=k; i++) {
+                    for (int j=0; j<=n; j++) {
+                        for (int l=0; l<=j; l++) {
+                            d[i,j] += d[i-1,j-l];
+                            d[i,j] %= mod;
+                        }
+                    }
+                }
+
+                Console.WriteLine(d[k,n]);
+            }
+        }
+
         public void Baekjoon_1699()
         {
             //제곱수의 합
@@ -1306,6 +1331,25 @@ namespace Programe
                     }
                 }
 
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_15998()
+        {
+            //1,2,3 더하기 3
+            long mod = 1_000_000_009;
+            long[] d = new long[1_000_001];
+            d[0] = d[1] = 1;
+            d[2] = 2;
+
+            for (long i = 3; i <= 1_000_000; i++) {
+                d[i] = (d[i - 1] + d[i - 2] + d[i - 3]) % mod;
+            }
+
+            int t = Convert.ToInt32(Console.ReadLine());
+            while (t-- > 0) {
+                long n = Convert.ToInt64(Console.ReadLine());
                 Console.WriteLine(d[n]);
             }
         }
