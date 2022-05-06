@@ -1354,6 +1354,174 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_1149()
+        {
+            //RGB거리
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[,] house = new int[n+1,3];
+                int[,] d = new int[n+1,3];
+
+                for (int i = 1; i <= n; i++)
+                {
+                    int[] price = Array.ConvertAll(Console.ReadLine().Split(' '), Int32.Parse);
+                    for (int j = 0; j < price.Length; j++)
+                    {
+                        house[i,j] = price[j];
+                    }
+                }
+                for (int i = 1; i<=n; i++)
+                {
+                    d[i,0] = Math.Min(d[i-1,1], d[i-1,2]) + house[i,0];
+                    d[i,1] = Math.Min(d[i-1,0], d[i-1,2]) + house[i,1];
+                    d[i,2] = Math.Min(d[i-1,0], d[i-1,1]) + house[i,2];
+                }
+                Console.WriteLine(Math.Min(Math.Min(d[n,0], d[n,1]), d[n,2]));
+            }
+        }
+
+        public void Baekjoon_1309()
+        {
+            //동물원
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[,] d = new int[n+1,3];
+                d[0,0] = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    d[i,0] = d[i-1,0] + d[i-1,1] + d[i-1,2];
+                    d[i,1] = d[i-1,0] + d[i-1,2];
+                    d[i,2] = d[i-1,0] + d[i-1,1];
+                    for (int j = 0; j < 3; j++)
+                    {
+                        d[i,j] %= 9901;
+                    }
+                }
+
+                 Console.WriteLine((d[n,0] + d[n,1] + d[n,2]) % 9901);
+            }
+        }
+
+        public void Baekjoon_11057()
+        {
+            //오르막 수
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[,] d = new int[n+1,10];
+
+                for (int i = 0; i <= 9; i++) d[1,i] = 1;
+                for (int i = 2; i <= n; i++) {
+                    for (int j = 0; j <= 9; j++) {
+                        for (int k = 0; k <= j; k++) {
+                            d[i,j] += d[i-1,k];
+                            d[i,j] %= 10007;
+                        }
+                    }
+                }
+                long ans = 0;
+                for (int i = 0; i < 10; i++) ans += d[n,i];
+                ans %= 10007;
+
+                Console.WriteLine(ans);
+            }
+        }
+
+        public void Baekjoon_9465()
+        {
+            //스티커
+            while (true)
+            {
+                int t = Convert.ToInt32(Console.ReadLine());
+                while (t-- > 0)
+                {
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    int[,] b = new int[3,n];
+                    int[,] d = new int[3,n+1];
+
+                    for (int i = 1; i <= 2; i++) {
+                        int[] a = Array.ConvertAll(Console.ReadLine().Split(), Int32.Parse);
+                        for (int j = 0; j < a.Length; j++) {
+                            b[i,j] = a[j];
+                        }
+                    }
+
+                    for (int i = 1; i <= n; i++) {
+                        d[0,i] = Math.Max(Math.Max(d[0,i-1], d[1,i-1]), d[2,i-1]) + b[0,i-1];
+                        d[1,i] = Math.Max(d[0,i-1], d[2,i-1]) + b[1,i-1];
+                        d[2,i] = Math.Max(d[0,i-1], d[1,i-1]) + b[2,i-1];
+                    }
+
+                    Console.WriteLine(Math.Max(Math.Max(d[0,n], d[1,n]), d[2,n]));
+                }
+            }
+        }
+
+        public void Baekjoon_2156()
+        {
+            //포도주 시식
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] a = new int[n+1];
+                int[] d = new int[n+1];
+                for (int i = 1; i <= n; i++) a[i] = Convert.ToInt32(Console.ReadLine());
+
+                d[1] = a[1];
+                if (n > 1)
+                {
+                    d[2] = a[1] + a[2];
+                    for (int i = 3; i <= n; i++) {
+                        d[i] = d[i-1];
+                        d[i] = Math.Max(d[i], d[i-2] + a[i]);
+                        d[i] = Math.Max(d[i], d[i-3] + a[i] + a[i-1]);
+                    }
+                }
+                Console.WriteLine(d[n]);
+            }
+        }
+
+        public void Baekjoon_1932()
+        {
+            //정수 삼각형
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[,] a = new int[n,n];
+                int[,] d = new int[n,n];
+                for (int i = 0; i < n; i++)
+                {
+                    int[] b = Array.ConvertAll(Console.ReadLine().Split(), Int32.Parse);
+                    for (int j = 0; j < b.Length; j++)
+                    {
+                        a[i,j] = b[j];
+                    }
+                }
+
+                d[0,0] = a[0,0];
+                for (int i = 1; i < n; i++)
+                {
+                    for (int j = 0; j <= i; j++)
+                    {
+                        d[i,j] = d[i-1,j] + a[i,j];
+                        if (j-1 >= 0)
+                        {
+                            d[i,j] = Math.Max(d[i-1,j-1] + a[i,j], d[i-1,j] + a[i,j]);
+                        }
+                    }
+                }
+                int ans = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    ans = Math.Max(ans, d[n-1,i]);
+                }
+
+                Console.WriteLine(ans);
+            }
+        }
+
         #endregion
         #endregion
 
