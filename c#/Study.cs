@@ -1639,7 +1639,72 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_13398()
+        {
+            //연속합 2
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] a = Array.ConvertAll(Console.ReadLine().Split(), Int32.Parse);
+                int[] d = new int[n];
+                int[] d2 = new int[n];
+
+                for (int i = 0; i < n; i++)
+                {
+                    d[i] = a[i];
+                    if (i > 0 && d[i] < d[i - 1] + a[i]) d[i] = d[i - 1] + a[i];
+                }
+                for (int i=n-1; i>=0; i--) {
+                    d2[i] = a[i];
+                    if (i < n-1 && d2[i] < d2[i+1] + a[i]) {
+                        d2[i] = d2[i+1] + a[i];
+                    }
+                }
+                int ans = d[0];
+                for (int i = 1; i<n; i++) {
+                    if (ans < d[i]) {
+                        ans = d[i];
+                    }
+                }
+                for (int i=1; i<n-1; i++) {
+                    if (ans < d[i-1] + d2[i+1]) {
+                        ans = d[i-1] + d2[i+1];
+                    }
+                }
+
+                Console.WriteLine(ans);
+            }
+        }
+
+        public void Baekjoon_2133()
+        {
+            //타일 채우기
+            while (true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                long[] d = new long[n+1];
+                d[0] = 1;
+                for (int i = 2; i <= n; i+=2) {
+                    d[i] = d[i-2]*3;
+                    for (int j=i-4; j >= 0; j-=2) {
+                        d[i] += d[j] * 2;
+                    }
+                }
+
+                Console.WriteLine(d[n]);
+            }
+        }
+
         #endregion
+        
+        #region 참고
+        
+        public void Baekjoon_1935()
+        {
+            //후위 표기식2
+            
+        }
+
         #endregion
 
         #region Study
