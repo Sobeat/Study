@@ -1699,11 +1699,57 @@ namespace Programe
         
         #region 참고
         
-        public void Baekjoon_1935()
+        public void Baekjoon_1918()
         {
-            //후위 표기식2
-            
+            //후위 표기식
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                string ans = "";
+                if (!String.IsNullOrEmpty(str))
+                {
+                    Stack<char> stack = new Stack<char>();
+                    foreach(char ch in str.ToCharArray())
+                    {
+                        if ('A' <= ch && ch <= 'Z') {
+                            ans += ch;
+                        }
+                        else if (ch == '(') {
+                            stack.Push(ch);
+                        }
+                        else if (ch == ')') {
+                            while (stack.Count > 0) {
+                                char c = stack.Pop();
+                                if (c == '(') break;
+                                ans += c;
+                            }
+                        }
+                        else {
+                            while (stack.Count > 0 && precedence(stack.Peek()) >= precedence(ch)) {
+                                ans += stack.Pop();
+                            }
+                            stack.Push(ch);
+                        }
+                    }
+
+                    while(stack.Count > 0)
+                    {
+                        ans += stack.Pop();
+                    }
+
+                    Console.WriteLine(ans);
+                }
+            }
         }
+
+        public int precedence(char ch)
+        {
+            if (ch == '(') return 0;
+            if (ch == '+' || ch == '-') return 1;
+            else return 2;
+        }
+
+        #endregion
 
         #endregion
 
