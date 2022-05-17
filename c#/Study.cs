@@ -1749,6 +1749,68 @@ namespace Programe
             else return 2;
         }
 
+        public void Baekjoon_1935()
+        {
+            //후위표기식2
+            while(true)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                double[] num = new double[n];
+                string? str = Console.ReadLine();
+                Stack<double> stack = new Stack<double>();
+                
+                if (!String.IsNullOrEmpty(str)) {
+                    for (int i = 0; i < n; i++) {
+                        num[i] = Convert.ToInt64(Console.ReadLine());
+                    }
+                    foreach(char ch in str.ToCharArray()) {
+                        if (ch >= 'A' && ch <= 'Z') stack.Push(num[(int)(ch-'A')]);
+                        else {
+                            double op2 = stack.Pop();
+                            double op1 = stack.Pop();
+                            if (ch == '+') {
+                                stack.Push(op1+op2);
+                            }
+                            else if (ch == '-') {
+                                stack.Push(op1-op2);
+                            }
+                            else if (ch == '*') {
+                                stack.Push(op1*op2);
+                            }
+                            else if (ch == '/') {
+                                stack.Push(op1/op2);
+                            }
+                        }
+                    }
+                    Console.WriteLine(String.Format("{0:0.00}", stack.Pop()));
+                }
+            }
+        }
+
+        public void Baekjoon_10808()
+        {
+            //알파벳 갯수
+            while (true) {
+                string? s = Console.ReadLine();
+                int[] count = new int[26];
+                StringBuilder sb = new StringBuilder();
+                if (!String.IsNullOrEmpty(s)) {
+                    foreach (char ch in s.ToCharArray()) {
+                        if (ch >= 'a' && ch <= 'z') {
+                            count[(int)ch - 97] += 1;
+                        }
+                    }
+
+                    for (int i = 0; i < count.Length; i++) {
+                        sb.Append(count[i]);
+                        sb.Append(" ");
+                    }
+
+                    Console.WriteLine(sb);
+                }
+            }
+        }
+
         #endregion
 
         #endregion
