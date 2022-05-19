@@ -1811,6 +1811,60 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_10809()
+        {
+            //알파벳 찾기
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                StringBuilder sb = new StringBuilder();
+                double[] count = new double[26];
+                Array.Fill<double>(count, -1);
+
+                if (!String.IsNullOrEmpty(str)) {
+                    for (int i = 0; i < str.ToCharArray().Length; i++) {
+                        if (str[i] >= 'a' && str[i] <= 'z') {
+                            if (count[(int)str[i] - 97] == -1) count[(int)str[i] - 97] = i;
+                        }
+                    }
+
+                    for (int i = 0; i < count.Length; i++) {
+                        sb.Append(count[i]);
+                        sb.Append(" ");
+                    }
+
+                    Console.WriteLine(sb);
+                }
+            }
+        }
+
+        public void Beakjoon_10820()
+        {
+            //문자열 분석
+            int n = 100;
+            while (n-- > 0)
+            {
+                string? str = Console.ReadLine();
+                StringBuilder sb = new StringBuilder();
+                int[] count = new int[4];
+                if (!String.IsNullOrEmpty(str)) {
+                    foreach(char ch in str.ToCharArray()) {
+                        if (ch >= 'a' && ch <= 'z') count[0] += 1;
+                        if (ch >= 'A' && ch <= 'Z') count[1] += 1;
+                        if (ch >= '0' && ch <= '9') count[2] += 1;
+                        if (ch == ' ') count[3] += 1;
+                    }
+
+                    for (int i = 0; i < 4; i++) {
+                        sb.Append(count[i]);
+                        sb.Append(" ");
+                    }
+
+                    Console.WriteLine(sb);
+                }
+            }
+        }
+
         #endregion
 
         #endregion
