@@ -1865,6 +1865,93 @@ namespace Programe
             }
         }
 
+        public void Baekjoon_2743()
+        {
+            //단어 길이 재기
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                if (!String.IsNullOrEmpty(str)) {
+                    Console.WriteLine(str.Length);
+                }
+            }
+        }
+
+        public void Beakjoon_11655()
+        {
+            //ROT13
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                StringBuilder sb = new StringBuilder();
+                if (!String.IsNullOrEmpty(str)) {
+                    foreach(char ch in str.ToCharArray()) {
+                        if (ch >= 'a' && ch <= 'z') {
+                            if ((char)(ch + 13) > 'z') {
+                                sb.Append(Char.ToString((char)('a' + (char)(ch + 12) - 'z')));
+                            }
+                            else {
+                                sb.Append(Char.ToString((char)(ch + 13)));
+                            }
+                        }
+                        else if (ch >= 'A' && ch <= 'Z') {
+                            if ((char)(ch + 13) > 'Z') {
+                                sb.Append(Char.ToString((char)('A' + (char)(ch + 12) - 'Z')));
+                            }
+                            else {
+                                sb.Append(Char.ToString((char)(ch + 13)));
+                            }
+                        }
+                        else {
+                            sb.Append(Char.ToString(ch));
+                        }
+                    }
+                    Console.WriteLine(sb);
+                }
+            }
+        }
+
+        public void Baekjoon_10824()
+        {
+            //네 수
+            while (true)
+            {
+                string[] str = new string[4];
+                str = Console.ReadLine().Split();
+                
+                string a = "", b = "";
+                for (int i = 0; i < 4; i ++) {
+                    if (i < 2) a += str[i];
+                    else b += str[i];
+                }
+
+                Console.WriteLine(Convert.ToInt64(a) + Convert.ToInt64(b));
+            }
+        }
+
+        public void Baekjoon_11656()
+        {
+            //접미사 배열
+            while (true)
+            {
+                string? str = Console.ReadLine();
+                StringBuilder sb = new StringBuilder();
+                if (!String.IsNullOrEmpty(str)) {
+                    string[] n = new string[str.Length];
+                    for (int i = 0; i < n.Length; i++) {
+                        n[i] = str.Substring(i);
+                    }
+                    Array.Sort(n);
+                    foreach(var s in n) {
+                        sb.AppendLine(s);
+                    }
+
+                    Console.WriteLine(sb);
+                }
+            }
+        }
+
+
         #endregion
 
         #endregion
