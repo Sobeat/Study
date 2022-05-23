@@ -5,7 +5,7 @@ namespace Programe
         static void Main(string[] args)
         {
             Study study = new Study();
-            study.Beakjoon_10820();
+            study.Baekjoon_11656();
         }
     }
 }
